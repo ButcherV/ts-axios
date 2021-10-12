@@ -1,5 +1,6 @@
 import { isDate, isObject } from './util'
 
+// Chain type
 function encode(val: string): string {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
