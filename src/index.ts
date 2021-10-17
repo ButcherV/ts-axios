@@ -8,7 +8,9 @@ interface LabelledValue {
 }
 
 function axios(config: AxiosRequestConfig): void {
+  // console.log(config.data)
   processConfig(config)
+  // console.log(config.data)
   xhr(config)
 }
 
