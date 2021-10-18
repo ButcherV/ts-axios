@@ -4,6 +4,10 @@ import { buildURL } from './helpers/url'
 import { transformRequest } from './helpers/data'
 import { processHeader } from './helpers/headers'
 
+interface LabelledValue {
+  label: string
+}
+
 function axios(config: AxiosRequestConfig): void {
   // console.log(config.data)
   processConfig(config)
@@ -13,6 +17,8 @@ function axios(config: AxiosRequestConfig): void {
 
 function processConfig(config: AxiosRequestConfig): void {
   config.url = transformURL(config)
+  // The execution order of transformHeaders needs to be before transformRequestData.
+  // Because transformheaders need to judge whether the data is a plain object.
   config.headers = transformHeaders(config)
   config.data = transformRequestData(config)
 }
@@ -27,6 +33,8 @@ function transformRequestData(config: AxiosRequestConfig): any {
 }
 
 function transformHeaders(config: AxiosRequestConfig): any {
+  // Headers is an option. It may not be transmitted at all
+  // It needs to be an empty object by default.
   const { headers = {}, data } = config
   return processHeader(headers, data)
 }

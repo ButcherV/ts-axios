@@ -35,6 +35,8 @@ export function processHeader(headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-type')
 
   if (isPlainObject(data)) {
+    // Even if the user does not pass the headers,
+    // if the data passed is an ordinary object, we also need to process the headers
     if (headers && !headers['Content-Type']) {
       headers['Content-Type'] = 'application/json;charset=utf-8'
     }
