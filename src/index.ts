@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from './types'
+import { AxiosRequestConfig, AxiosPromise } from './types'
 import xhr from './xhr'
 import { buildURL } from './helpers/url'
 import { transformRequest } from './helpers/data'
@@ -8,11 +8,11 @@ interface LabelledValue {
   label: string
 }
 
-function axios(config: AxiosRequestConfig): void {
+function axios(config: AxiosRequestConfig): AxiosPromise {
   // console.log(config.data)
   processConfig(config)
   // console.log(config.data)
-  xhr(config)
+  return xhr(config)
 }
 
 function processConfig(config: AxiosRequestConfig): void {
