@@ -1,7 +1,7 @@
-import { AxiosRequestConfig, AxiosPromise } from './types'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
 import xhr from './xhr'
 import { buildURL } from './helpers/url'
-import { transformRequest } from './helpers/data'
+import { transformRequest, transformResponse } from './helpers/data'
 import { processHeader } from './helpers/headers'
 
 interface LabelledValue {
@@ -12,7 +12,9 @@ function axios(config: AxiosRequestConfig): AxiosPromise {
   // console.log(config.data)
   processConfig(config)
   // console.log(config.data)
-  return xhr(config)
+  return xhr(config).then(res => {
+    return transformResponseData(res)
+  })
 }
 
 function processConfig(config: AxiosRequestConfig): void {
@@ -37,6 +39,11 @@ function transformHeaders(config: AxiosRequestConfig): any {
   // It needs to be an empty object by default.
   const { headers = {}, data } = config
   return processHeader(headers, data)
+}
+
+function transformResponseData(res: AxiosResponse): AxiosResponse {
+  res.data = transformResponse(res.data)
+  return res
 }
 
 export default axios

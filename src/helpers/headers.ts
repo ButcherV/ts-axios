@@ -62,6 +62,8 @@ export function processHeader(headers: any, data: any): any {
 
 export function parseHeaders(headers: string): any {
   let parsed = Object.create(null)
+  // The "Object.create(null)" of type is any.
+  // Using {} directly , "parsed[key] = val" will have an error.
   if (!headers) {
     return parsed
   }
