@@ -70,7 +70,7 @@ export function parseHeaders(headers: string): any {
 
   headers.split('\r\n').forEach(line => {
     let [key, val] = line.split(':')
-    console.log('key', key)
+    // console.log('key', key)
     if (!key) {
       return
     }

@@ -24,6 +24,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         return
       }
 
+      // Status has a value of 0 until the request completes.
+      // If XMLHttpRequest fails, the browser returns status 0.
       if (request.status === 0) {
         return
       }
