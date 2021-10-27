@@ -24,6 +24,10 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         return
       }
 
+      if (request.status === 0) {
+        return
+      }
+
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
       // console.log("responseType", responseType, request.response, request.responseText)
       const responseData = responseType !== 'text' ? request.response : request.responseText
@@ -36,7 +40,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         request
       }
 
-      resolve(response)
+      handleResponse(response)
     }
 
     request.onerror = function handleError() {
@@ -58,5 +62,13 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     })
 
     request.send(data)
+
+    function handleResponse(response: AxiosResponse): void {
+      if (response.status >= 200 && response.status < 300) {
+        resolve(response)
+      } else {
+        reject(new Error(`Request failed with status code ${response.status}`))
+      }
+    }
   })
 }
