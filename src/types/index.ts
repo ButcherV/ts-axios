@@ -21,6 +21,7 @@ export interface AxiosRequestConfig {
   params?: any
   headers?: any
   responseType?: XMLHttpRequestResponseType // from lib.dom.d.ts
+  timeout?: number // ms
 }
 
 export interface AxiosResponse {
